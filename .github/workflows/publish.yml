@@ -47,7 +47,7 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }} #
         run: |
-          twine upload dist/*
+          twine upload dist/* --skip-existing
 
       - name: Push changes and tags
         run: |
