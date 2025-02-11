@@ -6,7 +6,7 @@ install_requires = (this_directory / "requirements.txt").read_text().splitlines(
 
 setup(
     name="flake8-close-io-buffers",
-    version="0.1.1",
+    version="0.1.2",
     description="Flake8 plugin to detect opened but not closed IO buffers",
     packages=find_packages(),
     install_requires=install_requires,
