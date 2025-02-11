@@ -36,7 +36,11 @@ jobs:
           BUMPVERSION_TAG: "true"
         with:
           args: patch
-          github-token: ${{ secrets.GITHUB_TOKEN }}  # tmo
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build package
+        run: |
+          python setup.py sdist bdist_wheel
 
       - name: Publish package to PyPI
         env:
