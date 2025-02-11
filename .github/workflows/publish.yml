@@ -1,0 +1,47 @@
+name: Publish Package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          # This token is used to push commits (like version bumps) back to the repo.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install setuptools wheel twine bump2version pytest
+
+      - name: Run tests
+        run: |
+          pytest
+
+      - name: Bump version (patch)
+        id: bump_version
+        run: |
+          bump2version patch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build package
+        run: |
+          python setup.py sdist bdist_wheel
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
