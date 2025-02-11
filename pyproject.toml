@@ -2,3 +2,13 @@
 version_source = "tag"
 upload_to_pypi = true
 branch = "master"
+
+[tool.bump_my_version]
+current_version = "0.1.0"
+commit_message = "Bump version: {old_version} -> {new_version}"
+tag_message = "Release {new_version}"
+# List all files where the version number should be updated.
+files = [
+    "setup.py",
+    "flake8_close_io_buffers/__init__.py"
+]

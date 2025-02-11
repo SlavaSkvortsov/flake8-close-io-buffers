@@ -1,14 +1,18 @@
 from setuptools import setup, find_packages
+from pathlib import Path
+
+this_directory = Path(__file__).parent
+install_requires = (this_directory / "requirements.txt").read_text().splitlines()
+dev_requires = (this_directory / "requirements-dev.txt").read_text().splitlines()
 
 setup(
     name="flake8-close-io-buffers",
-    use_scm_version=True,
-    setup_requires=["setuptools_scm"],
+    version="0.1.0",  # This version will be updated by bump-my-version
     description="Flake8 plugin to detect opened but not closed IO buffers",
     packages=find_packages(),
-    install_requires=[line.strip() for line in open("requirements.txt").read().splitlines() if line.strip()],
+    install_requires=install_requires,
     extras_require={
-        "dev": [line.strip() for line in open("requirements-dev.txt").read().splitlines() if line.strip()],
+        "dev": dev_requires,
     },
     entry_points={
         "flake8.extension": [

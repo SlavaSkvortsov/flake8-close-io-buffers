@@ -7,39 +7,44 @@ on:
 
 jobs:
   publish:
-    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Ensures all commits and tags are fetched
+          fetch-depth: 0  # Required to push tags later
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.11
+          python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install build and bump dependencies
         run: |
-          pip install --upgrade pip setuptools wheel
+          pip install bump-my-version setuptools wheel twine
           pip install -r requirements-dev.txt
 
       - name: Run tests
         run: |
           pytest
 
-#      - name: Create tag using GitHub Tag Action
-#        uses: anothrNick/github-tag-action@1.71.0
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          WITH_V: true
-#          DEFAULT_BUMP: patch
-
-      - name: Publish Release >_<
-        env:
-          PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Bump version (patch)
         run: |
-          python -m semantic_release version
-          python -m semantic_release publish
+          bump-my-version patch
+
+      - name: Build package
+        run: |
+          python setup.py sdist bdist_wheel
+
+      - name: Publish package to PyPI
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          twine upload dist/*
+
+      - name: Push changes and tags
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git push --follow-tags
