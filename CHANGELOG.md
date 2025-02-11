@@ -1,14 +1,6 @@
 # CHANGELOG
 
 
-## v0.1.2 (2025-02-11)
-
-### Bug Fixes
-
-- Use semantic_release?
-  ([`c4e63a6`](https://github.com/SlavaSkvortsov/flake8-close-io-buffers/commit/c4e63a65a8416dd9c933ccc51d8b3bd5c0248cc7))
-
-
 ## v0.1.1 (2025-02-11)
 
 ### Bug Fixes
@@ -31,8 +23,14 @@
 - Set branch explicitly
   ([`12ce33d`](https://github.com/SlavaSkvortsov/flake8-close-io-buffers/commit/12ce33d8bd32a64fb16928963f9b684e8526fdb3))
 
+- Try again
+  ([`b66773b`](https://github.com/SlavaSkvortsov/flake8-close-io-buffers/commit/b66773b44238a11768515861db0fe0d563c0a559))
+
 - Use proper github token
   ([`1c13990`](https://github.com/SlavaSkvortsov/flake8-close-io-buffers/commit/1c139907e421e2061d5f02b3eb570a73ce0a47a4))
+
+- Use semantic_release?
+  ([`c4e63a6`](https://github.com/SlavaSkvortsov/flake8-close-io-buffers/commit/c4e63a65a8416dd9c933ccc51d8b3bd5c0248cc7))
 
 
 ## v0.1.0 (2025-02-11)
