@@ -1,4 +1,4 @@
 [tool.semantic_release]
 version_source = "tag"
 upload_to_pypi = true
-version_pattern = "v{version}"
+branch = "master"
