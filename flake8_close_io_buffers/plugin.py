@@ -104,36 +104,45 @@ class IOVisitor(ast.NodeVisitor):
         return names
 
     def visit_Call(self, node: ast.Call) -> None:
-        # Look for instantiations of io.BytesIO or io.StringIO.
+        # Check if the call is an instantiation of BytesIO or StringIO.
+        is_io_instantiation = False
         if isinstance(node.func, ast.Attribute):
+            # Handles calls like: io.BytesIO() or io.StringIO()
             func_attr: ast.Attribute = node.func
             if (
                 isinstance(func_attr.value, ast.Name)
                 and func_attr.value.id == "io"
                 and func_attr.attr in {"BytesIO", "StringIO"}
             ):
-                if self.with_context > 0:
-                    # Instantiation inside a with-statement header is considered safe.
-                    pass
+                is_io_instantiation = True
+        elif isinstance(node.func, ast.Name) and node.func.id in {"BytesIO", "StringIO"}:
+            # Handles calls like: BytesIO() or StringIO() after a direct import.
+            is_io_instantiation = True
+
+        if is_io_instantiation:
+            if self.with_context > 0:
+                # Consider instantiation safe if in a with-statement header.
+                pass
+            else:
+                names: List[str] = self._find_assigned_names(node)
+                if names:
+                    for name in names:
+                        self.assigned[name] = AssignedInfo(node=node, closed=False)
                 else:
-                    names: List[str] = self._find_assigned_names(node)
-                    if names:
-                        for name in names:
-                            self.assigned[name] = AssignedInfo(node=node, closed=False)
-                    else:
-                        self.issues.append(
-                            (
-                                node.lineno,
-                                node.col_offset,
-                                "IO100 unclosed IO object instantiation not assigned to a variable",
-                            )
+                    self.issues.append(
+                        (
+                            node.lineno,
+                            node.col_offset,
+                            "IO100 unclosed IO object instantiation not assigned to a variable",
                         )
+                    )
         # Look for calls to .close() to mark variables as closed.
         if isinstance(node.func, ast.Attribute) and node.func.attr == "close":
             if isinstance(node.func.value, ast.Name):
                 var_name: str = node.func.value.id
                 if var_name in self.assigned:
                     self.assigned[var_name].closed = True
+
         self.generic_visit(node)
 
     def _get_names(self, node: ast.AST) -> List[str]:
