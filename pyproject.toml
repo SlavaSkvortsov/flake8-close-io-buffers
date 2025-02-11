@@ -19,8 +19,3 @@ allow_dirty = false
 commit = false
 message = "Bump version: {current_version} → {new_version}"
 commit_args = ""
-# List all files where the version number should be updated.
-files = [
-    "setup.py",
-    "flake8_close_io_buffers/__init__.py"
-]
