@@ -14,7 +14,7 @@ def get_readme() -> str:
 
 setup(
     name="flake8-close-io-buffers",
-    version="0.1.2",
+    version="0.1.3",
     description="Flake8 plugin to detect opened but not closed IO buffers",
     packages=find_packages(),
     install_requires=install_requires,
