@@ -3,10 +3,22 @@ version_source = "tag"
 upload_to_pypi = true
 branch = "master"
 
-[tool.bump_my_version]
+[tool.bumpversion]
 current_version = "0.1.0"
-commit_message = "Bump version: {old_version} -> {new_version}"
-tag_message = "Release {new_version}"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{patch}"]
+search = "{current_version}"
+replace = "{new_version}"
+regex = false
+ignore_missing_version = false
+tag = false
+sign_tags = false
+tag_name = "v{new_version}"
+tag_message = "Bump version: {current_version} → {new_version}"
+allow_dirty = false
+commit = false
+message = "Bump version: {current_version} → {new_version}"
+commit_args = ""
 # List all files where the version number should be updated.
 files = [
     "setup.py",
