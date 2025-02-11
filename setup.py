@@ -3,7 +3,6 @@ from pathlib import Path
 
 this_directory = Path(__file__).parent
 install_requires = (this_directory / "requirements.txt").read_text().splitlines()
-dev_requires = (this_directory / "requirements-dev.txt").read_text().splitlines()
 
 setup(
     name="flake8-close-io-buffers",
@@ -11,9 +10,6 @@ setup(
     description="Flake8 plugin to detect opened but not closed IO buffers",
     packages=find_packages(),
     install_requires=install_requires,
-    extras_require={
-        "dev": dev_requires,
-    },
     entry_points={
         "flake8.extension": [
             "IO100 = flake8_close_io_buffers.plugin:UnclosedIOChecker",
