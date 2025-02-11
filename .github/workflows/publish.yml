@@ -28,8 +28,7 @@ jobs:
 
       - name: Publish Release
         env:
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-          # The GITHUB_TOKEN is automatically provided by GitHub Actions.
+          PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python -m semantic_release publish
