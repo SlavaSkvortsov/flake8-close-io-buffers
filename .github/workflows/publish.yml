@@ -53,4 +53,5 @@ jobs:
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/SlavaSkvortsov/flake8-close-io-buffers.git
           git push --follow-tags
