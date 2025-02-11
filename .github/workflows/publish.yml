@@ -12,7 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          # This token is used to push commits (like version bumps) back to the repo.
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
@@ -28,6 +27,10 @@ jobs:
       - name: Run tests
         run: |
           pytest
+
+      - name: Clean working directory
+        run: |
+          git clean -fdx
 
       - name: Bump version (patch)
         id: bump_version
