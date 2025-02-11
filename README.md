@@ -31,14 +31,6 @@ You can install the plugin from PyPI:
 pip install flake8-close-io-buffers
 ```
 
-Or install it in editable mode from source:
-
-```bash
-git clone https://github.com/your-username/flake8-close-io-buffers.git
-cd flake8-close-io-buffers
-pip install -e .
-```
-
 ## Usage
 
 Once installed, Flake8 will automatically load the plugin. Run Flake8 on your Python files as usual:
@@ -98,7 +90,7 @@ pytest
 
 ## Contributing
 
-Contributions are welcome! Please feel free to open issues or submit pull requests on [GitHub](https://github.com/your-username/flake8-close-io-buffers).
+Contributions are welcome! Please feel free to open issues or submit pull requests on [GitHub](https://github.com/SlavaSkvortsov/flake8-close-io-buffers).
 
 ## License
 
