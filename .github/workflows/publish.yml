@@ -35,7 +35,7 @@ jobs:
       - name: Bump version (patch)
         id: bump_version
         run: |
-          bump2version patch
+          bump2version patch --allow-dirty patch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
